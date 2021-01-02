@@ -1,0 +1,265 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="01" author="inventory">
+        <createTable tableName="msisdn_category"
+                     remarks="A table to contain categories of msisdn">
+            <column name="msisdn_category_id" type="bigint(20)">
+                <constraints nullable="false" unique="true"
+                             primaryKey="true"/>
+            </column>
+            <column name="msisdn_category_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="varchar(255)"/>
+            <column name="pattern" type="varchar(255)"/>
+            <column name="remarks" type="varchar(255)"/>
+            <column name="is_active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint(20)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="modified_by" type="bigint(20)"/>
+            <column name="modified_at" type="timestamp"/>
+        </createTable>
+        <addAutoIncrement tableName="msisdn_category"
+                          columnName="msisdn_category_id" columnDataType="bigint(20)"/>
+    </changeSet>
+
+    <changeSet id="02" author="inventory">
+        <createTable tableName="msisdn_status"
+                     remarks="A table to contain status of msisdn">
+            <column name="msisdn_status_id" type="bigint(20)">
+                <constraints nullable="false" unique="true"
+                             primaryKey="true"/>
+            </column>
+            <column name="msisdn_status_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remarks" type="varchar(255)"/>
+            <column name="is_active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint(20)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="modified_by" type="bigint(20)"/>
+            <column name="modified_at" type="timestamp"/>
+        </createTable>
+        <addAutoIncrement tableName="msisdn_status"
+                          columnName="msisdn_status_id" columnDataType="bigint(20)"/>
+    </changeSet>
+    <changeSet id="03" author="inventory">
+        <createTable tableName="msisdn"
+                     remarks="A table to contain msisdn">
+            <column name="msisdn_id" type="bigint(20)">
+                <constraints nullable="false" unique="true"
+                             primaryKey="true"/>
+            </column>
+            <column name="msisdn_number" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="msisdn_service_provider_id" type="bigint(20)"/>
+            <column name="msisdn_category_id" type="bigint(20)">
+                <constraints nullable="false"
+                             foreignKeyName="fk_msisdn_msisdn_category"
+                             references="msisdn_category(msisdn_category_id)"/>
+            </column>
+            <column name="msisdn_status" type="bigint(20)">
+                <constraints nullable="false"
+                             foreignKeyName="fk_msisdn_msisdn_status"
+                             references="msisdn_status(msisdn_status_id)"/>
+            </column>
+            <column name="created_by" type="bigint(20)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="modified_by" type="bigint(20)"/>
+            <column name="modified_at" type="timestamp"/>
+        </createTable>
+        <addAutoIncrement tableName="msisdn"
+                          columnName="msisdn_id" columnDataType="bigint(20)"/>
+        <addUniqueConstraint
+                columnNames="msisdn_number"
+                constraintName="msisdn_number_unique"
+                deferrable="true"
+                tableName="msisdn"/>
+    </changeSet>
+    <changeSet id="04" author="inventory">
+        <createTable tableName="msisdn_user_mapping"
+                     remarks="A table to contain user,expiry time for msisdn">
+            <column name="msisdn_user_mapping_id" type="bigint(20)">
+                <constraints nullable="false" unique="true"
+                             primaryKey="true"/>
+            </column>
+            <column name="msisdn_id" type="bigint(20)">
+                <constraints nullable="false"
+                             foreignKeyName="fk_msisdn_msisdn_user_mapping"
+                             references="msisdn(msisdn_id)"/>
+            </column>
+            <column name="app_registration_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_time" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="varchar(255)"/>
+            <column name="is_display" type="bit(1)"/>
+            <column name="created_by" type="bigint(20)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="modified_by" type="bigint(20)"/>
+            <column name="modified_at" type="timestamp"/>
+        </createTable>
+        <addAutoIncrement tableName="msisdn_user_mapping"
+                          columnName="msisdn_user_mapping_id" columnDataType="bigint(20)"/>
+    </changeSet>
+
+    <changeSet id="05" author="inventory">
+        <sqlFile path="/db/changelog/insert.sql"/>
+    </changeSet>
+    <changeSet author="inventory" id="06">
+        <insert tableName="msisdn_category">
+            <column name="msisdn_category_name" value="PLATINUM"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="bhanunegi (generated)" id="1605868083876-1">
+        <createTable tableName="msisdn_mnp">
+            <column autoIncrement="true" name="msisdn_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="msisdn_mnpPK"/>
+            </column>
+            <column name="created_at" type="timestamp"/>
+            <column name="created_by" type="BIGINT"/>
+            <column name="modified_at" type="timestamp"/>
+            <column name="modified_by" type="BIGINT"/>
+            <column name="msisdn_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="msisdn_service_provider_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="msisdn_category_id" type="BIGINT"/>
+            <column name="msisdn_status" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-2">
+        <addUniqueConstraint columnNames="msisdn_id" constraintName="UC_MSISDN_MNPMSISDN_ID_COL"
+                             tableName="msisdn_mnp"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-3">
+        <addForeignKeyConstraint baseColumnNames="msisdn_status" baseTableName="msisdn_mnp"
+                                 constraintName="FK7jcp0el6bbbb9cl7korwfvdit" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="msisdn_status_id"
+                                 referencedTableName="msisdn_status"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-4">
+        <addForeignKeyConstraint baseColumnNames="msisdn_category_id" baseTableName="msisdn_mnp"
+                                 constraintName="FKmouicmwysj29rv0wvnxvb08m2" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="msisdn_category_id"
+                                 referencedTableName="msisdn_category"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-5">
+        <dropUniqueConstraint constraintName="msisdn_number_unique" tableName="msisdn"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-6">
+        <dropUniqueConstraint constraintName="msisdn_user_mapping_id" tableName="msisdn_user_mapping"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-11">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="app_registration_id"
+                               tableName="msisdn_user_mapping"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-12">
+        <dropNotNullConstraint columnDataType="blob" columnName="expiry_time" tableName="msisdn_user_mapping"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-13">
+        <dropNotNullConstraint columnDataType="bigint" columnName="msisdn_category_id" tableName="msisdn"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-14">
+        <dropNotNullConstraint columnDataType="bigint" columnName="msisdn_id" tableName="msisdn_user_mapping"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-15">
+        <addNotNullConstraint columnDataType="bigint" columnName="msisdn_service_provider_id" tableName="msisdn"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1605868083876-16">
+        <dropNotNullConstraint columnDataType="bigint" columnName="msisdn_status" tableName="msisdn"/>
+    </changeSet>
+
+    <changeSet id="1605868083876-17" author="inventory">
+        <sqlFile path="/db/changelog/trigger.sql"/>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1607439076794-9">
+        <createTable tableName="sim">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+            <column name="created_by" type="BIGINT"/>
+            <column name="modified_at" type="datetime"/>
+            <column name="modified_by" type="BIGINT"/>
+            <column name="available_from" type="datetime"/>
+            <column name="available_till" type="datetime"/>
+            <column name="external_id" type="VARCHAR(255)"/>
+            <column name="iccid" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="imsi" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column defaultValueNumeric="1" name="is_active" type="TINYINT(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="msisdn" type="VARCHAR(255)"/>
+            <column name="puk_1" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="puk_2" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="security_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sim_type" type="VARCHAR(255)"/>
+            <column name="sim_state" type="VARCHAR(255)"/>
+            <column name="vendor_ref" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="bhanunegi (generated)" id="1607439076794-10">
+        <createTable tableName="sim_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+            <column name="created_by" type="BIGINT"/>
+            <column name="modified_at" type="datetime"/>
+            <column name="modified_by" type="BIGINT"/>
+            <column name="available_from" type="datetime"/>
+            <column name="available_till" type="datetime"/>
+            <column name="external_id" type="VARCHAR(255)"/>
+            <column name="iccid" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="imsi" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column defaultValueNumeric="1" name="is_active" type="TINYINT(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="msisdn" type="VARCHAR(255)"/>
+            <column name="puk_1" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="puk_2" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="security_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sim_type" type="VARCHAR(255)"/>
+            <column name="sim_state" type="VARCHAR(255)"/>
+            <column name="vendor_ref" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

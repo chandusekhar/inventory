@@ -1,0 +1,80 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+         
+       <changeSet id="01" author="user">
+  <createTable tableName="user"
+    remarks="A table to contain users">
+    <column name="user_id" type="bigint(20)">
+      <constraints nullable="false" unique="true" primaryKey="true"/>
+    </column>
+    <column name="first_name" type="varchar(255)">
+      <constraints nullable="false"/>
+    </column>
+     <column name="middle_name_1" type="varchar(255)">
+      <constraints nullable="false"/>
+    </column>
+     <column name="middle_name_2" type="varchar(255)">
+      <constraints nullable="false"/>
+    </column>
+     <column name="last_name" type="varchar(255)">
+      <constraints nullable="false"/>
+    </column>
+    <column name="user_external_id" type="varchar(255)">
+    <constraints nullable="false"/>
+    </column>
+    <column name="phone_no" type="varchar(255)">
+    <constraints nullable="false"/>
+    </column>
+     <column name="email_id" type="varchar(255)">
+    <constraints nullable="false"/>
+    </column>
+    <column name="phone_type" type="varchar(255)"/>
+    <column name="app_version" type="varchar(255)"/>
+    <column name="app_registration_id" type="varchar(255)"/>
+    <column name="imei" type="text"/>
+    <column name="dob" type="date"/>
+    <column name="profile_pic" type="text"/>
+    <column name="referral_code" type="varchar(255)"/>
+    <column name="referral_code_activation_status" type="bigint(20)"/>
+    <column name="first_login" type="datetime"/>
+    <column name="last_login" type="datetime"/>
+    <column name="is_email_system_generated" type="bit(1)"/>
+    <column name="preferred_language" type="bigint(20)"/>
+    <column name="personal_id_type" type="bigint(20)"/>
+    <column name="personal_id_number" type="varchar(255)"/>
+    <column name="nationality" type="varchar(255)"/>
+    <column name="gender" type="varchar(255)"/>
+    <column name="email_status" type="bigint(20)"/>
+    <column name="email_verification_code" type="varchar(255)"/>
+    <column name="email_verification_sent_at" type="datetime"/>
+    <column name="email_to_be_verified" type="varchar(255)"/>
+    <column name="last_known_ip" type="varchar(255)"/>
+    <column name="kyc_document" type="text"/>
+    <column name="kyc_document_status" type="bigint(20)"/>
+    <column name="kyc_document_submitted_at" type="datetime"/>
+    <column name="kyc_document_verified_at" type="datetime"/>
+    <column name="kyc_status" type="bigint(20)"/>
+    <column name="is_limit_enabled" type="bit(1)"/>
+    <column name="limit" type="int(11)"/>
+    <column name="products_exempted_from_limit" type="json"/>
+    <column name="is_active" type="bit(1)"/>
+    <column name="created_by" type="bigint(20)"/>
+    <column name="created_at" type="timestamp"/>
+    <column name="modified_by" type="bigint(20)"/>
+    <column name="modified_at" type="timestamp"/>
+  </createTable>
+  </changeSet>
+  <changeSet id="02" author="user">
+  <modifyDataType tableName="user" columnName="profile_pic" newDataType="blob"/>
+  <dropNotNullConstraint tableName="user" columnName="first_name" columnDataType="varchar(255)"/>
+  <dropNotNullConstraint tableName="user" columnName="middle_name_1" columnDataType="varchar(255)"/>
+  <dropNotNullConstraint tableName="user" columnName="middle_name_2" columnDataType="varchar(255)"/>
+  <dropNotNullConstraint tableName="user" columnName="last_name" columnDataType="varchar(255)"/>
+  <dropNotNullConstraint tableName="user" columnName="user_external_id" columnDataType="varchar(255)"/>
+  <dropNotNullConstraint tableName="user" columnName="phone_no" columnDataType="varchar(255)"/>
+  <dropNotNullConstraint tableName="user" columnName="email_id" columnDataType="varchar(255)"/>	
+</changeSet>
+  </databaseChangeLog>
